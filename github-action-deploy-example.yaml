@@ -1,0 +1,22 @@
+name: Deploy Angular to Azure Blob Storage
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Install dependencies
+        run: npm install
+      - name: Build Angular app
+        run: ng build --configuration=production
+      - name: Upload to Azure Blob Storage
+        run: |
+          az storage blob upload-batch --account-name <your-storage-account> --destination \$web --source ./dist/<your-app-name>

@@ -1,0 +1,16 @@
+trigger:
+  - main
+pool:
+  vmImage: ubuntu-latest
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
+  - script: |
+      npm install
+      ng build --configuration=production
+    displayName: 'Build Angular App'
+  - script: |
+      az storage blob upload-batch --account-name <your-storage-account> --destination \$web --source ./dist/<your-app-name>
+    displayName: 'Upload to Blob Storage'
