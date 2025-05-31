@@ -1,0 +1,25 @@
+<div class="exercise-title-container">
+  <h2>This is a Kindalab challenge to use Angular with Net stack</h2>
+</div>
+
+<div class="exercise-map-container">
+  <div class="search-section">
+    <form class="movies-form">
+      <mat-form-field class="movies-form-movie-search">
+        <input matInput placeholder="Search movies by title" [formControl]="searchControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect($event.option.value)">
+          @for (movie of filteredMovies | async; track movie) {
+          <mat-option [value]="movie.title">{{movie.title}}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div id="map-container" class="movies-map-section"></div>
+
+</div>
+
+@if(loading) {
+  <mat-progress-bar class="loading-section" mode="indeterminate"></mat-progress-bar>
+}
